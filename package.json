@@ -1,0 +1,33 @@
+{
+  "name": "basic-to-do-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon Server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cluster": "^0.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "geoip-lite": "^1.4.10",
+    "http": "^0.0.1-security",
+    "http-status-codes": "^2.3.0",
+    "ip": "^2.0.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.7",
+    "nodemon": "^3.1.0",
+    "os": "^0.1.2",
+    "sequelize": "^6.37.3",
+    "socket.io": "^4.7.5",
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}
