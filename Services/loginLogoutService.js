@@ -4,6 +4,8 @@ const sequelize = require("../DBConnections/dbConnect");
 const bcrypt = require("bcrypt");
 const userLocation = require("../Models/userLocation");
 const {getReverseGeocodingData}=require("../Utilities/getAddressOfLatLong");
+
+
 const login = async (username, password, latitude, longitude) => {
     if (!username || !password) {
         logger.error('Please provide both username and password.');
