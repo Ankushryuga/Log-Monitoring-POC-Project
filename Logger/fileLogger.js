@@ -1,14 +1,15 @@
 
 
+// const { json } = require('body-parser');
 const { createLogger, format, transports } = require('winston');
 require('winston-daily-rotate-file');
 
-const { combine, timestamp, label, printf } = format;
+const { combine, timestamp, label, printf,json } = format;
 
 // Custom format for log messages
-const logFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`;
-});
+// const logFormat = printf(({ level, message, label, timestamp }) => {
+//   return `${timestamp} [${label}] ${level}: ${message}`;
+// });
 
 // Configuration for daily rotating log files for info level
 const infoRotateTransport = new transports.DailyRotateFile({
@@ -30,13 +31,24 @@ const errorRotateTransport = new transports.DailyRotateFile({
   level: 'error'
 });
 
+
+// return createLogger({
+//   level: "debug",
+//   format: combine(timestamp(), json()),
+//   defaultMeta: { service: "user-service" },
+//   // Define the transports for logging
+//   transports: transportsArray
+// });
+// };
+
 // Create a logger instance
 const logger = createLogger({
   format: combine(
-    label({ label: 'App' }),
-    timestamp(),
-    logFormat
+    // label({ label: 'App' }),
+    timestamp(),json()
+    // logFormat
   ),
+  defaultMeta:{service: "user-service"}, 
   transports: [infoRotateTransport, errorRotateTransport]
 });
 

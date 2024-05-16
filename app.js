@@ -8,6 +8,7 @@ const asyncErrorMiddleware=require('./MiddleWares/handleCrash');
 const app=express();
 const registerRouter=require("./Routes/registerRoute");
 const loginRouter=require("./Routes/loginLogOutRoute");
+const fileRouter=require("./Routes/filesRoute");
 app.use(express.json());
 // app.use(asyncErrorMiddleware);
 // app.use(bodyParser.json());
@@ -29,4 +30,5 @@ app.use(asyncErrorMiddleware);
 
 app.use("/", registerRouter);
 app.use("/", loginRouter);
+app.use("/", fileRouter);
 module.exports=app;

@@ -2,3 +2,5 @@
 /package-lock.json
 /Configurations/config.env
 /logs/*.log
+
+/logs/*.json

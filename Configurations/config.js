@@ -41,5 +41,8 @@ exports.Configurations = {
   },
   cassandraInformation:{
     //will include cassandra later.
+  },
+  redisInformation:{
+    DEFAULT_EXPIRATION:7200
   }
 };

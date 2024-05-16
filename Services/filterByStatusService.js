@@ -20,7 +20,7 @@ const filterByStatusGetAllLogData=async(statusChecked, username, logData)=>{
 };
 //remove all log data from frontend when clicking status twice it will not delete 
 // from database of file 
-const hideLogData=async(statusUnChecked, username)=>{
+const hideLogDataService=async(statusUnChecked, username)=>{
 
 };
 //hide info log data.
@@ -38,7 +38,7 @@ module.exports={
     getErrorLogData, 
     getWarnLogData, 
     filterByStatusGetAllLogData,
-    hideLogData,
+    hideLogDataService,
     hideInfoLogData,
     hideErrorLogData,
     hideWarnLogData,
