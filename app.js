@@ -9,6 +9,8 @@ const app=express();
 const registerRouter=require("./Routes/registerRoute");
 const loginRouter=require("./Routes/loginLogOutRoute");
 const fileRouter=require("./Routes/filesRoute");
+const infoRouter=require("./Routes/logRoute");
+
 app.use(express.json());
 // app.use(asyncErrorMiddleware);
 // app.use(bodyParser.json());
@@ -31,4 +33,5 @@ app.use(asyncErrorMiddleware);
 app.use("/", registerRouter);
 app.use("/", loginRouter);
 app.use("/", fileRouter);
+app.use("/", infoRouter);
 module.exports=app;

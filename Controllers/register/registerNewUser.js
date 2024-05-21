@@ -21,8 +21,8 @@ const { registerNewUserService } = require("../../Services/registerNewUserServic
 exports.registerNewUser = asyncWrapper(async (req, res, next) => {
     // try {
         logger.info(Configurations.Logger.registerUser, req);
-        const {username, fullname, useremail, password}=req.body;
-        const result = await registerNewUserService(username, fullname, useremail, password);
+        const {username, fullname, useremail, password, usercontactnumber}=req.body;
+        const result = await registerNewUserService(username, fullname, useremail, password, usercontactnumber);
         // console.log("Result: ", result);
         res.status(StatusCodes.OK).json(result);
     //     } catch (error) {

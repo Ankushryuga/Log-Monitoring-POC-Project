@@ -6,6 +6,12 @@ const {StatusCodes}=require('http-status-codes');
 const logger=require("../Logger/fileLogger");
 const users=require("../Models/users");
 const {readFile}=require('fs/promises');
+const unstructuredlogdata=require("../PostgresModels/unstructuredLogDataModel");
+const structuredlogdata=require("../PostgresModels/structuredLogDataModel");
+const {extractDateFromTimestamp}=require("../Utilities/getDateOnly");
+const moment=require('moment');
+let isStructued=false;
+
 const addFilesService=async(files, username)=>{
     try{
         let data=[];
@@ -45,6 +51,11 @@ const addFilesService=async(files, username)=>{
 
     // }
 };
+let initialLogId=0;
+function generateLogId(){
+    initialLogId+1;
+    return initialLogId;
+}
 // const files="../logs/info-rotate-2024-05-12.log";
 // const username="ankush"
 // addFilesService(files, username);
@@ -128,7 +139,8 @@ const addFilesService=async(files, username)=>{
 // return extractedData;
 // }
 // console.log(storeLogDataInDatabase);
-const storeLogDataInDatabase = async (result) => {
+const storeLogDataInDatabase = async (username,result) => {
+    // console.log("Username: ",username);
     if (result.status === 1) {
         let extractedData = [];
 
@@ -136,21 +148,25 @@ const storeLogDataInDatabase = async (result) => {
             // Check if the line is in JSON format
             if (line.startsWith('{')) {
                 try {
+                    isStructued=true;
                     const { level, message, service, timestamp } = JSON.parse(line.toLowerCase());
                     return { timestamp, level, service, message };
                 } catch (error) {
                     console.error(`Error parsing JSON data: ${error.message}`);
+                    logger.error(`Error parsing JSON data: ${error.message}`);
                     return null;
                 }
             }
             // Check if the line is in the second format
             else {
+                isStructued=false;
                 const match = line.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)\s+\[([^\]]+)\]\s+(\w+):\s(.+)/);
                 if (match) {
                     const [, timestamp, app, level, message] = match;
                     return { timestamp, level, service: app, message };
                 } else {
                     console.error(`Unexpected format for entry: ${line}`);
+                    logger.error(`Unexpected format for entrt: ${line}`);
                     return null;
                 }
             }
@@ -160,9 +176,32 @@ const storeLogDataInDatabase = async (result) => {
             extractedData = [...extractedData, ...innerArray.map(processData).filter(Boolean)];
         });
 
-        console.log(extractedData);
-
-        return extractedData;
+        const logArrayData=extractedData.map(log=>({
+           
+// const datePart = moment(log.timestamp).format('YYYY-MM-DD')
+            // logid: generateLogId(),
+            username:username,
+            timestamp:log.timestamp,
+            level:log.level,
+            service:log.service,
+            message:log.message,
+            date: moment(log.timestamp).format('YYYY-MM-DD')
+        }))
+        // console.log(logArrayData);
+        // console.log(extractedData);
+        // unstructuredlogdata.bulkCreate(logArrayData)
+        //                     .then(()=>console.log("Bulk insertion successful"))
+        //                     .catch(error=>console.log("Error occured while inserting bulk data", error));
+        // // return extractedData;
+        if(isStructued){
+            unstructuredlogdata.bulkCreate(logArrayData)
+                               .then(()=>console.log("structured log data inserted: "))
+                               .catch(error=>console.log("Error occured while inserting structured data"));
+        }else{
+            unstructuredlogdata.bulkCreate(logArrayData)
+                               .then(()=>console.log("Unstructured log data inserted successfuly:"))
+                               .catch(error=>console.log("Error occured while inserting unstructured log data.", error));
+        }
     }
 };
 

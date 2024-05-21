@@ -39,6 +39,11 @@
             "date": 1715759687965,
             "name": "logs/error-rotate-2024-05-15.log",
             "hash": "3a682a72e794a6f1b52011ae7064d0616c8d7885184706d5cc87a985fea24146"
+        },
+        {
+            "date": 1715933924481,
+            "name": "logs/error-rotate-2024-05-17.log",
+            "hash": "2b01880f9eef07c591dc2fd238d3baa2cc711eefc8cde2b763b400f125ca698b"
         }
     ],
     "hashType": "sha256"

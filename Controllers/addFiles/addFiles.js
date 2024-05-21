@@ -16,9 +16,9 @@ exports.addFiles=asyncWrapper(async(req, res, next)=>{
     // const {files, username}=req.body;
     // console.log("IN controller", files);
     // let file="../../logs/info-rotate-2024-05-12.log";
-    let files=["/home/ankush/ANKUSH____/Nodejs/Day 1/Basic To-Do App/logs/info-rotate-2024-01-01.log"];
+    let files=["/home/ankush/ANKUSH____/Nodejs/Day 1/Basic To-Do App/logs/info-rotate-2024-05-17.log"];
     const user="ankush";
     const result=await addFilesService(files, user);
     res.status(StatusCodes.OK).json(result);
-    await storeLogDataInDatabase(result);
+    await storeLogDataInDatabase(user, result);
 });

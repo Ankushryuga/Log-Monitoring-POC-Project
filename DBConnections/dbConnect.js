@@ -3,12 +3,12 @@ const { Sequelize } = require('sequelize');
 const logger=require("../Logger/fileLogger");
 
 const sequelize = new Sequelize(
-    Configurations.databaseInformation.databaseName,
-    Configurations.databaseInformation.username,
-    Configurations.databaseInformation.password,
+    Configurations.sqlDevelopementDb.databaseName,
+    Configurations.sqlDevelopementDb.username,
+    Configurations.sqlDevelopementDb.password,
     {
-        host: Configurations.databaseInformation.hostname,
-        port: Configurations.databaseInformation.port, // Make sure this port is correct and open
+        host: Configurations.sqlDevelopementDb.hostname,
+        port: Configurations.sqlDevelopementDb.port, // Make sure this port is correct and open
         dialect: 'mysql', // Assuming MySQL. Change if using another dialect
         dialectOptions: {
             connectTimeout: 60000 // Increase the timeout value to 5 minutes (adjust as needed)

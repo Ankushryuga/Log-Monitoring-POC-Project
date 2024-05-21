@@ -1,10 +1,11 @@
 const logger = require("../Logger/fileLogger");
-const users = require("../Models/users");
+// const users = require("../Models/users");
 const sequelize = require("../DBConnections/dbConnect");
 const bcrypt = require("bcrypt");
-const userLocation = require("../Models/userLocation");
+// const userLocation = require("../Models/userLocation");
 const {getReverseGeocodingData}=require("../Utilities/getAddressOfLatLong");
-
+const users=require("../PostgresModels/users");
+const userLocation=require("../PostgresModels/usersLocation");
 
 const login = async (username, password, latitude, longitude) => {
     if (!username || !password) {

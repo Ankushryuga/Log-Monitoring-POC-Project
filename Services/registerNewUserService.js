@@ -1,11 +1,13 @@
 const logger=require("../Logger/fileLogger");
-const users=require("../Models/users");
+// const users=require("../Models/users");
+const users=require("../PostgresModels/users");
 const {RegisterUser}=require("../Configurations/config").Configurations.APIMessages;
-const seqelize=require("../DBConnections/dbConnect");
+// const seqelize=require("../DBConnections/dbConnect");
+const postgreSequelize=require("../DBConnections/postgresDbConnect");
 const bcrypt=require('bcrypt');
-const registerNewUserService=async(username, fullname, useremail, password)=>{
+const registerNewUserService=async(username, fullname, useremail, password, usercontactnumber)=>{
     try{
-        if(!username || !fullname || !useremail || !password){
+        if(!username || !fullname || !useremail || !password || !usercontactnumber){
             return {
                 status:0,
                 message:RegisterUser.invalidInput
@@ -30,7 +32,8 @@ const registerNewUserService=async(username, fullname, useremail, password)=>{
             username:username,
             fullname:fullname,
             useremail:useremail,
-            password:hashedPassword
+            usercontactnumber:usercontactnumber,
+            password:hashedPassword,
         });
         return {
             status: 1,
@@ -38,7 +41,11 @@ const registerNewUserService=async(username, fullname, useremail, password)=>{
         };
     }catch(error){
         logger.error(`Error occured while registering new user ${error}`);
-        // console.log(`Error occured while register`)
+        console.log(`Error occured while register`);
+        return {
+            status:0,
+            message:"Error occured while registering: "
+        }
     }
     }catch(error){
         console.log("Error occured while creating new users ", error);
